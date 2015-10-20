@@ -26,9 +26,13 @@ class Planeta(object):
         primer orden.
         '''
         x, y, vx, vy = self.y_actual
-        # fx = ...
-        # fy = ...
+
+        rr= x**2 + y**2
+        f_comun=(2 * self.alpha) / (rr**2) - 1 / ( np.sqrt(rr)**3 )
+        fx = x * G * M * f_comun
+        fy = y * G * M * f_comun
         return [vx, vy, fx, fy]
+
 
     def avanza_euler(self, dt):
         '''
@@ -36,24 +40,43 @@ class Planeta(object):
         en un intervalo de tiempo dt usando el método de Euler explícito. El
         método no retorna nada, pero re-setea los valores de self.y_actual.
         '''
-        pass
+        y_anterior=self.y_actual
+        self.y_actual= y_anterior + dt*self.ecuacion_de_movimiento()
+        self.t_actual+=dt
+
 
     def avanza_rk4(self, dt):
         '''
-        Similar a avanza_euler, pero usando Runge-Kutta 4.
+        Toma la condición actual del planeta y avanza su posicion y velocidad
+        en un intervalo de tiempo dt usando el método de Runge Kutta 4. El
+        método no retorna nada, pero re-setea los valores de self.y_actual.
         '''
-        pass
+        y_anterior=self.y_actual
+        k1=self.ecuacion_de_movimiento()
+        self.y_actual=y_anterior+(dt / 2) * k1
 
-    def avanza_verlet(self, dt):
+        k2=self.ecuacion_de_movimiento()
+        self.y_actual=y_anterior+(dt / 2) * k2
+
+        k3=self.ecuacion_de_movimiento()
+        self.y_actual=y_anterior+(dt / 2) * k3
+
+        k4=self.ecuacion_de_movimiento()
+
+        self.y_actual=y_anterior + ( 1 / 6 )*(k1 + k2 + k3 + k4)
+
+        self.t_actual+=dt
+
+
+    def avanza_verlet(self, dt, Y):
         '''
         Similar a avanza_euler, pero usando Verlet.
         '''
-        pass
+        self.y_actual=2 * self.y_actual - Y + dt**2 * self.ecuacion_de_movimiento
+        self.t_actual+=dt
 
     def energia_total(self):
         '''
         Calcula la enérgía total del sistema en las condiciones actuales.
         '''
         pass
-
-
