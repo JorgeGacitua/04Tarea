@@ -45,7 +45,7 @@ class Planeta(object):
         método no retorna nada, pero re-setea los valores de self.y_actual.
         '''
         y_anterior=self.y_actual
-        self.y_actual= y_anterior + dt * (self.ecuacion_de_movimiento())
+        self.y_actual= y_anterior + dt * self.ecuacion_de_movimiento()
         self.t_actual+=dt
 
 
@@ -77,7 +77,12 @@ class Planeta(object):
         '''
         Similar a avanza_euler, pero usando Verlet.
         '''
-        self.y_actual=2 * self.y_actual - Y + dt**2 * (self.ecuacion_de_movimiento())
+        X_ahora=2 * self.y_actual[0] - Y[0] + dt**2 * self.ecuacion_de_movimiento()[2]
+        Y_ahora=2 * self.y_actual[1] - Y[1] + dt**2 * self.ecuacion_de_movimiento()[3]
+        VX_ahora=(X_ahora-Y[0]) / (2 * dt)
+        VY_ahora=(Y_ahora-Y[1]) / (2 * dt)
+
+        self.y_actual=np.array([X_ahora,Y_ahora,VX_ahora,VY_ahora])
         self.t_actual+=dt
 
     def energia_total(self):

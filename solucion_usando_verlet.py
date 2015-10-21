@@ -51,7 +51,7 @@ plt.clf()
 plt.subplot(2, 1, 1)
 fig.subplots_adjust(hspace=.5)
 plt.plot(X , Y,)
-plt.title("Trayectoria")
+plt.title("Trayectoria (Verlet)")
 plt.xlabel("x")
 plt.ylabel("y")
 
