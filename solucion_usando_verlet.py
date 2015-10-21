@@ -26,9 +26,19 @@ VX[0]=condicion_inicial[2]
 VY[0]=condicion_inicial[3]
 ET[0]=p.energia_total()
 
+p.avanza_rk4(dt)
+X[1]=p.y_actual[0]
+Y[1]=p.y_actual[1]
+VX[1]=p.y_actual[2]
+VY[1]=p.y_actual[3]
+ET[1]=p.energia_total()
+t_values[1]=p.t_actual
 
-for i in range(1,n_pasos):
-    p.avanza_euler(dt)
+
+
+for i in range(2,n_pasos):
+    Y_anterior=np.array([X[i-2], Y[i-2], VX[i-2], VY[i-2]])
+    p.avanza_verlet(dt,Y_anterior)
     X[i]=p.y_actual[0]
     Y[i]=p.y_actual[1]
     VX[i]=p.y_actual[2]
@@ -49,6 +59,6 @@ plt.subplot(2, 1, 2)
 plt.plot(t_values,ET)
 plt.xlabel("Tiempo [s]")
 plt.ylabel("Energia [J]")
-plt.savefig('Sol_Euler.eps')
+plt.savefig('Sol_Verlet.eps')
 plt.show()
 plt.draw()

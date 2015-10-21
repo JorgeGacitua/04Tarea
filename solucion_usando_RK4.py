@@ -28,7 +28,7 @@ ET[0]=p.energia_total()
 
 
 for i in range(1,n_pasos):
-    p.avanza_euler(dt)
+    p.avanza_rk4(dt)
     X[i]=p.y_actual[0]
     Y[i]=p.y_actual[1]
     VX[i]=p.y_actual[2]
@@ -49,6 +49,6 @@ plt.subplot(2, 1, 2)
 plt.plot(t_values,ET)
 plt.xlabel("Tiempo [s]")
 plt.ylabel("Energia [J]")
-plt.savefig('Sol_Euler.eps')
+plt.savefig('Sol_RK4.eps')
 plt.show()
 plt.draw()
