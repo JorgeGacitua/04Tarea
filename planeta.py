@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 class Planeta(object):
+    G=1
+    M=1
+    m=1
     '''
     Complete el docstring.
     '''
@@ -77,6 +79,9 @@ class Planeta(object):
 
     def energia_total(self):
         '''
-        Calcula la enérgía total del sistema en las condiciones actuales.
+        Calcula la energía total por del sistema en las condiciones actuales.
         '''
-        pass
+        x,y,vx,vy = self.y_actual
+        K=m*0.5*(xv**2 + vy**2)
+        r=np.sqrt(x**2+y**2)
+        U=-G*M*m/r + self.alpha*G*M*m/r**2
